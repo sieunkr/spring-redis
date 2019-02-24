@@ -34,7 +34,7 @@ public class RedisApplication {
                                 javafx.scene.paint.Color.web(name).getRed(),
                                 javafx.scene.paint.Color.web(name).getBlue(),
                                 javafx.scene.paint.Color.web(name).getGreen()))
-                        .flatMap(color -> colorOps.opsForValue().set("colors::v2::"+color.getName(), color)))
+                        .flatMap(color -> colorOps.opsForValue().set("colors::v3::"+color.getName(), color)))
                 .subscribe(
                         null,
                         error -> System.out.println("에러"),

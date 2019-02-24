@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
-import java.util.stream.Collectors;
 
 @Service
 public class ColorUseCase {
@@ -20,26 +19,17 @@ public class ColorUseCase {
     Logger logger = LoggerFactory.getLogger(ColorUseCase.class);
 
     private final CacheComponent cacheComponent;
-    private final RedisTemplate redisTemplate;
 
-
-    public ColorUseCase(CacheComponent cacheComponent, RedisTemplate redisTemplate) {
+    public ColorUseCase(CacheComponent cacheComponent) {
         this.cacheComponent = cacheComponent;
-        this.redisTemplate = redisTemplate;
     }
 
     public List<Color> findAllByLoop(){
         List<Color> responseList = new ArrayList<>();
 
-        long startTime = System.currentTimeMillis();
-
         colorList.forEach(color -> {
-            responseList.add(cacheComponent.findById(color));
+            responseList.add(cacheComponent.findByName(color));
         });
-
-        long estimatedTime = System.currentTimeMillis() - startTime;
-
-        logger.info("took " + estimatedTime + " ms");
 
         return responseList;
     }
@@ -48,26 +38,16 @@ public class ColorUseCase {
 
         Map<String, Color> responseMap = new ConcurrentHashMap<>();
 
-        long startTime = System.currentTimeMillis();
-
         ForkJoinPool forkjoinPool = new ForkJoinPool(10);
         try {
             forkjoinPool.submit(() -> {
-                //colorList.Stream().forEach(colorName -> {
-                colorList.parallelStream().forEach(colorName -> {
-                    responseMap.put(colorName,cacheComponent.findById(colorName));
-                });
+                colorList.parallelStream().forEach(colorName ->
+                        responseMap.put(colorName,cacheComponent.findByName(colorName)));
             }).get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-
-        long estimatedTime = System.currentTimeMillis() - startTime;
-
-        logger.info("took " + estimatedTime + " ms");
-
         return new ArrayList<>(responseMap.values());
-
     }
 
     public List<Color> findAllByFuture(){

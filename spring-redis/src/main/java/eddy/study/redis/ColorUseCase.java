@@ -21,17 +21,17 @@ public class ColorUseCase {
         this.redisTemplate = redisTemplate;
     }
 
-    public List<Color> findAll(){
+    /*
+    Key 조회
+    List<byte[]> keys = redisTemplate.getConnectionFactory().getConnection()
+            .keys("colors::v3::*".getBytes()).parallelStream().collect(Collectors.toList());
+    */
 
-        /*
-        Key 조회
-        List<byte[]> keys = redisTemplate.getConnectionFactory().getConnection()
-                .keys("colors::v2::*".getBytes()).parallelStream().collect(Collectors.toList());
-        */
+    public List<Color> findAll(){
 
         //TODO: 코드 깔끔하게,, 리팩토링하자!
         List<byte[]> keys = colorList.stream()
-                .map(k -> ("colors::v2::" + k).getBytes())
+                .map(k -> ("colors::v3::" + k).getBytes())
                 .collect(Collectors.toList());
 
         return redisTemplate.getConnectionFactory()

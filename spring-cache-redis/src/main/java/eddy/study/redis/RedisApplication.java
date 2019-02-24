@@ -53,6 +53,6 @@ public class RedisApplication implements CommandLineRunner {
                 "MINTCREAM","MISTYROSE","MOCCASIN","NAVAJOWHITE",
                 "NAVY","OLDLACE","OLIVE","OLIVEDRAB");
 
-        colorList.stream().forEach(cacheComponent::findById);
+        colorList.stream().forEach(cacheComponent::findByName);
     }
 }

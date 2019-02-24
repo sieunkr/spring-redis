@@ -54,8 +54,11 @@ public class RedisApplication implements CommandLineRunner {
 
         //colorList.stream().forEach(cacheComponent::findById);
 
-        colorList.stream().forEach(name -> colorRepository.save(new Color(name, javafx.scene.paint.Color.web(name).getRed(),
-                javafx.scene.paint.Color.web(name).getBlue(),
-                javafx.scene.paint.Color.web(name).getGreen())));
+        colorList.stream().forEach(name ->
+                colorRepository.save(new Color(
+                                        name,
+                                        javafx.scene.paint.Color.web(name).getRed(),
+                                        javafx.scene.paint.Color.web(name).getBlue(),
+                                        javafx.scene.paint.Color.web(name).getGreen())));
     }
 }

@@ -18,7 +18,6 @@ public class ColorController {
 
     @GetMapping
     public Collection<Color> findAll(){
-
         return colorUseCase.findAll();
     }
 }

@@ -25,7 +25,7 @@ public class ColorController {
     public Flux<Color> findAllByGet(){
 
         //단일 key, 여러번 호출
-        return colorOps.keys("colors::v2::*")
+        return colorOps.keys("colors::v3::*")
                 .flatMap(colorOps.opsForValue()::get);
 
     }
@@ -34,7 +34,7 @@ public class ColorController {
     public Mono<List<Color>> findAllByMultiGet(){
 
         return colorOps.opsForValue()
-                .multiGet(colorList.stream().map(k -> "colors::v2::" + k).collect(Collectors.toList()));
+                .multiGet(colorList.stream().map(k -> "colors::v3::" + k).collect(Collectors.toList()));
 
     }
 

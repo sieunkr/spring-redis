@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class CacheComponent {
 
     @Cacheable(value = "colors::v1", key = "#name")
-    public Color findById(String name){
+    public Color findByName(String name){
 
         javafx.scene.paint.Color color = javafx.scene.paint.Color.web(name);
 

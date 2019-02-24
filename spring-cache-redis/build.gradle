@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
     //implementation 'org.springframework.boot:spring-boot-starter-cache'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis' //spring-data-common 을 사용하지는 않지만, Auto-Configuration 편의를 위해 디펜던시로 추가하였음.
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
